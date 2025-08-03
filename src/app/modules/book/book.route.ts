@@ -2,7 +2,7 @@
 import { Router } from "express";
 import { BookController } from "./book.controller";
 import { validateRequest } from "../../../middleWares/validationRequest";
-import { createBookValidationSchema, updateBookValidationSchema } from "./book.validation";
+import { createBookValidationSchema } from "./book.validation";
 
 
 

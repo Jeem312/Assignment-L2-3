@@ -1,5 +1,8 @@
-import { Schema, model } from 'mongoose';
-import {  TBorrowDocument } from './borrow.interfce';
+import mongoose, { Schema, Document, Model } from 'mongoose';
+import { TBorrow } from './borrow.interfce';
+
+
+export interface TBorrowDocument extends TBorrow, Document {}
 
 const borrowSchema = new Schema<TBorrowDocument>({
   book: {
@@ -20,15 +23,15 @@ const borrowSchema = new Schema<TBorrowDocument>({
   timestamps: true
 });
 
-// Pre-save middleware for logging
-borrowSchema.pre('save', function(next) {
+// Pre-save middleware (optional logging)
+borrowSchema.pre<TBorrowDocument>('save', function(next) {
   console.log(`Borrowing ${this.quantity} copies of book ${this.book}`);
   next();
 });
 
-// Post-save middleware
-borrowSchema.post('save', function() {
-  console.log(`Borrow record created for ${this.quantity} copies due on ${this.dueDate}`);
+// Post-save middleware (optional logging)
+borrowSchema.post<TBorrowDocument>('save', function(doc) {
+  console.log(`Borrow record created for ${doc.quantity} copies due on ${doc.dueDate}`);
 });
 
-export const Borrow = model<TBorrowDocument>('Borrow', borrowSchema);
+export const Borrow: Model<TBorrowDocument> = mongoose.model<TBorrowDocument>('Borrow', borrowSchema);

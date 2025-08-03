@@ -1,4 +1,4 @@
-import { Document, Types } from 'mongoose';
+import { Types } from "mongoose";
 
 export interface TBorrow {
   book: Types.ObjectId;
@@ -6,12 +6,14 @@ export interface TBorrow {
   dueDate: Date;
 }
 
-export interface TBorrowDocument extends TBorrow, Document {}
+export interface Borrow {
+    book: string;
+    quantity: number;
+    dueDate: Date;
+}
 
-export interface TBorrowSummary {
-  book: {
-    title: string;
-    isbn: string;
-  };
-  totalQuantity: number;
+export interface BorrowData {
+  book: string;
+  quantity: number;
+  dueDate: Date;
 }
