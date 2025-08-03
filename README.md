@@ -1,4 +1,3 @@
-
 # 📚 Library Management API
 
 A comprehensive **Library Management System** built with **Express.js**, **TypeScript**, and **MongoDB** using **Mongoose**. This API provides full CRUD operations for books and borrowing management with advanced features like filtering, sorting, aggregation, and robust error handling.
@@ -169,31 +168,6 @@ bookSchema.post('save', function () {
 });
 ```
 
-### 3. MongoDB Aggregation Pipeline
-```typescript
-const result = await Borrow.aggregate([
-  { $group: { _id: '$book', totalQuantity: { $sum: '$quantity' } } },
-  { $lookup: { from: 'books', localField: '_id', foreignField: '_id', as: 'bookDetails' } },
-  { $unwind: '$bookDetails' },
-  { $project: { book: { title: '$bookDetails.title', isbn: '$bookDetails.isbn' }, totalQuantity: 1 } }
-]);
-```
-
-### 4. Transaction Support
-```typescript
-const session = await mongoose.startSession();
-session.startTransaction();
-try {
-  // Database operations...
-  await session.commitTransaction();
-} catch (error) {
-  await session.abortTransaction();
-  throw error;
-} finally {
-  session.endSession();
-}
-```
-
 ## 🏗️ Project Structure
 
 ```
@@ -212,7 +186,8 @@ src/
 │   │       ├── borrow.interface.ts
 │   │       ├── borrow.model.ts
 │   │       ├── borrow.route.ts
-│   │       └── borrow.service.ts
+│   │       ├── borrow.service.ts
+│   │       └── borrow.validation.ts
 │   └── routes/
 │       └── index.ts
 ├── config/
@@ -276,7 +251,7 @@ Content-Type: application/json
 }
 ```
 
-2. **Get All Books with Filtering:**
+2. **Get Books with Filtering:**
 ```
 GET http://localhost:5000/api/books?filter=NON_FICTION&sortBy=title&sort=asc&limit=5
 ```
@@ -318,6 +293,20 @@ Content-Type: application/json
 - ✅ **Exact API Endpoints** - All endpoints match requirements
 - ✅ **Error Handling** - Comprehensive error management
 
+## 📦 Package.json Scripts
+
+```json
+{
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  }
+}
+```
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -326,7 +315,3 @@ Content-Type: application/json
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
-
-
-**Happy Coding! 🚀**
