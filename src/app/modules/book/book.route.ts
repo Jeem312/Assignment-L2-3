@@ -1,41 +1,38 @@
-
 import { Router } from "express";
 import { BookController } from "./book.controller";
 import { validateRequest } from "../../../middleWares/validationRequest";
-import { createBookValidationSchema } from "./book.validation";
-
-
+import { createBookValidationSchema, updateBookValidationSchema, getBookQueryValidationSchema } from "./book.validation";
 
 const router = Router();
 
 router.post(
-    "/createBook", validateRequest(createBookValidationSchema),
+    "/", 
+    validateRequest(createBookValidationSchema),
     BookController.createBook
 )
 
+
 router.get(
   '/',
- 
+  validateRequest(getBookQueryValidationSchema), 
   BookController.getAllBooks
 );
 
-// Get book by ID
-router.get( '/:bookId',
+
+router.get( 
+  '/:bookId',
   BookController.getBookById
 );
 
-// Update book
-router.patch(
+router.put(
   '/:bookId',
- 
+  validateRequest(updateBookValidationSchema),
   BookController.updateBook
 );
 
-// Delete book
 router.delete(
   '/:bookId',
   BookController.deleteBook
 );
-
 
 export const BookRoutes = router;
