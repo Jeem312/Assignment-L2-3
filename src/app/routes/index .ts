@@ -1,18 +1,20 @@
 import { Router } from "express"
-import UserRoutes from "../modules/user/user.router"
+import { BorrowRoutes } from "../modules/borrow/borrow.route"
+import { BookRoutes } from "../modules/book/book.route"
 
 
 export const router = Router()
 
 const moduleRoutes = [
     {
-        path: "/user",
-        route: UserRoutes
+        path: "/book",
+        route: BookRoutes
     },
-    // {
-    //     path: "/tour",
-    //     route: TourRoutes
-    // },
+     {
+        path: "/borrow",
+        route: BorrowRoutes
+
+    },
 ]
 
 moduleRoutes.forEach((route) => {
