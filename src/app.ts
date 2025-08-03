@@ -13,7 +13,7 @@ app.use("/api/v1", router)
 
 app.get("/", (req: Request, res: Response) => {
     res.status(200).json({
-        message: "Welcome to Ontonim  Server"
+        message: "Welcome to Library Management API Server"
     })
 })
 
@@ -22,4 +22,4 @@ app.use(globalErrorHandler)
 
 app.use(notFoundHandler)
 
-export default app
+export default app;
